@@ -18,7 +18,7 @@ This empowers the users with the immediate information needed to respond to the 
 
 ## How It Works:
 
-- Part 1: Google Nest API: Using the Google Device Access API (https://developers.google.com/nest/device-access/project: "Before creating your first project, you must register for Device Access. Registration consists of the acceptance of the Google API and Device Access Sandbox Terms of Service, along with a one-time, non-refundable fee (US$5) per account"), we are able to access a backhand route to getting the camera feed of any Nest camera. We then process the WebRTC stream through the YOLOv9e model to parse through the frames and analyze whether or not there is a person being detected. If it detects a person, it will send it to Gemini.
+- Part 1: Google Nest API: Using the Google Device Access API, we are able to access the camera feed of a wired Nest camera. We then process the WebRTC stream frames through the YOLOv9e model and analyze whether or not there is a person being detected. If it detects a person, a video batch will be sent to Gemini.
 
 - Part 2: Gemini: Once the frames are sent to Gemini, the model will process the frames and also, with a given prompt that asks for a detailed report, it will generate a detailed report ergarding the main events, the suspicion level, and recommended steps if needed.
 
@@ -27,3 +27,5 @@ This empowers the users with the immediate information needed to respond to the 
 ## Add-On:
 
 Considering that access to a Nest camera and using the Nest developer API to get this system working isn't available for everyone, we built an alternative to the general system on StreamLit. Instead of using a Nest camera, it will employ the webcam of a computer (via OpenCV) as the camera and run the model using your webcam feed. Link to StreamLit: https://eagleai.streamlit.app/
+
+If you would like to use the Nest cam, go to https://developers.google.com/nest/device-access/project and follow the instructions to register for Google Device access, obtain the required keys, and run the webrtc folder server. You can then run nestcam.py to continuously send frames to Gemini and alert you.
