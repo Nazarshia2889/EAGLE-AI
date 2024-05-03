@@ -18,7 +18,7 @@ This empowers the users with the immediate information needed to respond to the 
 
 ## How It Works:
 
-- Part 1: Google Nest API: Using the Google Nest developer API, we are able to access a backhand route to getting the camera feed of any Nest camera. We then process the WebRTC stream through the YOLOve model to parse
+- Part 1: Google Nest API: Using the Google Nest developer API, we are able to access a backhand route to getting the camera feed of any Nest camera. We then process the WebRTC stream through the YOLOv9e model to parse
 through the frames and analyze whether or not there is a person being detected. If it detects a person, it will send it to Gemini.
 
 - Part 2: Gemini: Once the frames are sent to Gemini, the model will process the frames and also, with a given prompt that asks for a detailed report, it will generate a detailed report ergarding the main events, the suspicion level, and recommended steps if needed.
