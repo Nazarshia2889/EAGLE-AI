@@ -26,4 +26,4 @@ This empowers the users with the immediate information needed to respond to the 
 
 ## Add-On:
 
-Considering that access to a Nest camera and using the Nest developer API to get this system working isn't available for everyone, we built an alternative to the general system on StreamLit. Instead of using a Nest camera, it will employ the webcam of a computer (via OpenCV) as the camera and run the model using your webcam feed. Link to StreamLit: 
+Considering that access to a Nest camera and using the Nest developer API to get this system working isn't available for everyone, we built an alternative to the general system on StreamLit. Instead of using a Nest camera, it will employ the webcam of a computer (via OpenCV) as the camera and run the model using your webcam feed. Link to StreamLit: https://eagleai.streamlit.app/
