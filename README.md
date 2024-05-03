@@ -27,4 +27,4 @@ through the frames and analyze whether or not there is a person being detected. 
 
 ## Add-On:
 
-Considering that access to a Nest camera and using the Nest developer API to get this system working isn't available for everyone, we built an alternative to the general system on StreamLit. Instead of using a Nest camera, it will employ the webcam of a computer as the camera and run the model using your webcam feed. Link to StreamLit: 
+Considering that access to a Nest camera and using the Nest developer API to get this system working isn't available for everyone, we built an alternative to the general system on StreamLit. Instead of using a Nest camera, it will employ the webcam of a computer (via OpenCV) as the camera and run the model using your webcam feed. Link to StreamLit: 
