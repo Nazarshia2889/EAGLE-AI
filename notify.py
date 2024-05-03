@@ -27,7 +27,7 @@ def send_message(phone_number, carrier, message):
 
 
 if __name__ == "__main__":
-  phone_number = "8584420958"
+  phone_number = "YOUR PHONE NUMBER HERE"
   carrier = "verizon"
   message = "hello, this is from python program"
   print(f"Usage: python3 {phone_number, carrier, message}")
