@@ -1,6 +1,0 @@
-opencv-python
-ultralytics
-moviepy
-google-generativeai
-collections
-threading
