@@ -18,7 +18,7 @@ This empowers the users with the immediate information needed to respond to the 
 
 ## How It Works:
 
-- Part 1: Google Nest API: Using the Google Device Access API, we are able to access the camera feed of a wired Nest camera. We then process the WebRTC stream frames through the YOLOv8 model and analyze whether or not there is a person being detected. If it detects a person, a video batch will be sent to Gemini.
+- Part 1: Google Nest API: Using the Google Device Access API, we are able to access the camera feed of a wired Nest camera. We then process the WebRTC stream frames through the YOLOv8n model and analyze whether or not there is a person being detected. If it detects a person, a video batch will be sent to Gemini.
 
 - Part 2: Gemini: Once the frames are sent to Gemini, the model will process the frames and also, with a given prompt that asks for a detailed report, it will generate a detailed report ergarding the main events, the suspicion level, and recommended steps if needed.
 
