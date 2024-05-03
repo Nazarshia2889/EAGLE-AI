@@ -1,19 +1,28 @@
 # EagleAI Security Assist
 
-## Overview
+## Overview:
+
 We enhance security systems by legeraging AI to provide immediate, actionable security reports. Our system, EAGLE (Enhanced Automated Guardian for Living Environments) AI, reduces false positive notifications and provides detailed summaries of any detected irregularities.
 
-## Inspiration
+## Inspiration:
 
-After using popular security systems, we noticed a large amount of false positive notifications. Eventually, many of us became desensitized to these notifications, making it hard to determine if the alert was for an actual emergency or for something as minor as a stray animal. Receiving notifications such as “There Is Motion Detected at Your Front Door” didn’t tell us the severity of the notification. This is a huge problem, especially in home security, where every second counts. 
+After using popular security systems, we noticed a large amount of false positive notifications. Eventually, many of us became desensitized to these notifications, making it hard to determine if the alert was for an actual emergency or for something as minor as a stray animal. Receiving notifications such as "There Is Motion Detected at Your Front Door" didn't tell us the severity of the notification. This is a huge problem, especially in home security, where every second counts.
 
-## Features
- - Detailed summary of irregularities instead of generic notifications.
- - Estimates severity and provides options for next steps.
- - Applications in personal security and large-scale surveillance.
+## Features:
 
-This empowers the users with the immediate information needed to respond to the situation instead of them needing to manually classify the severity of the situation by rewatching security footage. 
+- Detailed summary of irregularities instead of generic notifications.
+- Estimates severity and provides options for next steps.
+- Applications in personal security and large-scale surveillance.
 
-## How It Works
-Our system uses a traditional model to detect individuals in the footage. Once detected, it records thirty seconds of footage and leverages Gemini’s multimodal capabilities to summarize the footage, generating a comprehensive report.
+This empowers the users with the immediate information needed to respond to the situation instead of them needing to manually classify the severity of the situation by rewatching security footage.
 
+## How It Works:
+
+- Part 1: Google Nest API: Using the Google Nest developer API, we are able to access a backhand route to getting the camera feed of any Nest camera. We then process the WebRTC stream through the YOLOve model to parse
+through the frames and analyze whether or not there is a person being detected. If it detects a person, it will send it to Gemini.
+
+- Part 2: Gemini: Once the frames are sent to Gemini, the model will process the frames and also, with a given prompt that asks for a detailed report, it will generate a detailed report ergarding the main events, the suspicion level, and recommended steps if needed.
+
+- Part 3: Text Message: Once the report is finalized,
+
+Our system uses a traditional model to detect individuals in the footage. Once detected, it records thirty seconds of footage and leverages Gemini's multimodal capabilities to summarize the footage, generating a comprehensive report.
