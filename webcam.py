@@ -112,7 +112,7 @@ def upload_to_gemini(genai, frames, prompt=PROMPT) -> str:
 	for path in temp_files:
 		os.remove(path)
 
-	send_message("8582259790", "verizon", response.text)
+	send_message(phone_number, "verizon", response.text)
 	return response.text
 
 frame_placeholder = st.empty()
