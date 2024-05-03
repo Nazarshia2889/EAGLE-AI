@@ -23,6 +23,8 @@ through the frames and analyze whether or not there is a person being detected. 
 
 - Part 2: Gemini: Once the frames are sent to Gemini, the model will process the frames and also, with a given prompt that asks for a detailed report, it will generate a detailed report ergarding the main events, the suspicion level, and recommended steps if needed.
 
-- Part 3: Text Message: Once the report is finalized,
+- Part 3: Text Message: Once the report is finalized, using Python's EmailMessage library, we will send a text message of the report to the individual user notifying them of the situation and what the recommended next steps are.
 
-Our system uses a traditional model to detect individuals in the footage. Once detected, it records thirty seconds of footage and leverages Gemini's multimodal capabilities to summarize the footage, generating a comprehensive report.
+## Add-On:
+
+Considering that access to a Nest camera and using the Nest developer API to get this system working isn't available for everyone, we built an alternative to the general system on StreamLit. Instead of using a Nest camera, it will employ the webcam of a computer as the camera and run the model using your webcam feed. 
