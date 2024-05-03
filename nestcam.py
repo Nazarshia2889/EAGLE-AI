@@ -124,7 +124,7 @@ def upload_to_gemini(genai, frames, prompt=PROMPT) -> str:
 		os.remove(path)
 
 	# send_message("8582259790", "verizon", response.text)
-	send_message("8584420958", "verizon", "Subject: ALERT\n\n " + response.text)
+	send_message("YOUR PHONE NUMBER HERE", "verizon", "Subject: ALERT\n\n " + response.text)
 	return response.text
 
 yolo_model = YOLO('yolov8n.pt')
