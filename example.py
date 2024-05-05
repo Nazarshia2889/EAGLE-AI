@@ -46,9 +46,8 @@ response = model.generate_content(request,
         'DANGEROUS' : 'BLOCK_NONE'
     })
 
-# 8582910362 levi 
-# 8582105220 kathik
-EMAIL = os.environ.get("EMAIL") # eail to send sms from
+
+EMAIL = os.environ.get("EMAIL") # email to send sms from
 PASSWORD = os.environ.get("PASSWORD") # app password/authentication
 def send_message(phone_number, carrier, message):
     recipient = phone_number + CARRIERS[carrier]
