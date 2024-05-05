@@ -14,7 +14,7 @@ chrome_opt.add_argument("--headless")
 # create webdriver object
 driver = webdriver.Chrome(options = chrome_opt) 
 
-# get geeksforgeeks.org
+
 driver.get(url)
 
 # get element
@@ -69,7 +69,7 @@ An individual was spotted in your garage. They appear to be removing items from 
 genai.configure(api_key='AIzaSyCUAR7qw9UPOay8T8Pg9-ExH0OJSCNU89E')
 genai_model = genai.GenerativeModel(model_name='models/gemini-1.5-pro-latest')
 
-EMAIL = os.environ.get("EMAIL") # eail to send sms from
+EMAIL = os.environ.get("EMAIL") # email to send sms from
 PASSWORD = os.environ.get("PASSWORD") # app password/authentication
 
 def detect_person(image, model) -> tuple[bool, float]:
