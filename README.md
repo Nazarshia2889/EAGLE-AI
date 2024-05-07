@@ -4,7 +4,7 @@
 
 ## Overview:
 
-We enhance security systems by leveraging AI to provide immediate, actionable security reports. Our system, EAGLE (Enhanced Automated Guardian for Living Environments) AI, reduces false positive notifications and provides detailed summaries of any detected irregularities. *We use camera feed from a Google Nest Camera in order to carry out our project.*
+We enhance security systems by leveraging AI to provide immediate, actionable security reports through text messages. Our system, EAGLE (Enhanced Automated Guardian for Living Environments) AI, reduces false positive notifications and provides detailed summaries of any detected irregularities. *We use camera feed from a Google Nest Camera in order to carry out our project.*
 
 ## Inspiration:
 
