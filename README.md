@@ -24,7 +24,7 @@ This empowers the users with the immediate information needed to respond to the 
 
 - Part 2: Gemini: Once the frames are sent to Gemini, the model will process the frames and also, with a given prompt that asks for a detailed report, it will generate a detailed report regarding the main events, the suspicion level, and recommended steps if needed.
 
-- Part 3: Text Message: Once the report is finalized, using Python's EmailMessage library, we will send a text message of the report to the individual user notifying them of the situation and what the recommended next steps are.
+- Part 3: Text Message: Once the report is finalized, we will send a text message of the report to the individual user notifying them of the situation and what the recommended next steps are.
 
 ### Want to use with your Nest Camera?
 
