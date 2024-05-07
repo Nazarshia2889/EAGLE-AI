@@ -74,7 +74,7 @@ def upload_to_gemini(genai, frames, prompt=PROMPT) -> str:
 
 	temp_files = []
 	for i, frame in enumerate(frames[1::PROCESSING_FRAMES]):
-		path = f'{ivideo}_frame_{i}.jpg'
+		path = f'./{ivideo}_frame_{i}.jpg'
 		temp_files.append(path)
 		cv2.imwrite(path, frame)
 		response = genai.upload_file(path)
@@ -109,7 +109,7 @@ st.caption('EagleAI Demo with your own webcam as the security camera. Powered by
 st.text("Input your phone number before starting webcam to receive text alerts.")
 phone_number = st.text_input('Phone Number', '1234567890')
 
-yolo_model = YOLO('yolov8n.pt')
+yolo_model = YOLO('./yolov8n.pt')
 # yolo_model.to('cuda')
 
 st.warning("""Please note, MMS messages may experience delays due to processing via your carrier’s SMTP server. In the final product, we plan to implement our own VoIP system for improved efficiency. However, due to current project constraints, this feature is not yet available.""")
