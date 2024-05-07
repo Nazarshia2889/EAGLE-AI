@@ -44,7 +44,7 @@ Next, clone this repository and input the above variables in the corresponding f
 
 We have also created a Streamlit version of the product using your computer's webcam as the "security camera" for demos. To run, clone this repository, download the dependencies in requirements.txt, and run the app `webcam.py` with:
 ```shell
-$ streamlit run webacm.py
+$ streamlit run webcam.py
 ```
 This should open the app. Input your phone number and hit 'start' to turn on your webcam. This will execute the same algorithm as the Nest camera version.
 
