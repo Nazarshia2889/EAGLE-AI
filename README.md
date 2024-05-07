@@ -1,5 +1,7 @@
 # EagleAI Security Assist
 
+![Basic example of Eagle AI](./docs/images/eagleai.gif)
+
 ## Overview:
 
 We enhance security systems by leveraging AI to provide immediate, actionable security reports. Our system, EAGLE (Enhanced Automated Guardian for Living Environments) AI, reduces false positive notifications and provides detailed summaries of any detected irregularities. *We use camera feed from a Google Nest Camera in order to carry out our project.*
