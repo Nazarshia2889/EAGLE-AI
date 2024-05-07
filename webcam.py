@@ -9,7 +9,6 @@ import smtplib
 import numpy as np
 import queue
 from streamlit_webrtc import WebRtcMode, webrtc_streamer
-from twilio.rest import Client
 
 FPS = 30 # frames per second
 CONFIDENCE_THRESHOLD = 0.6 # face detection confidence threshold
@@ -28,11 +27,6 @@ CARRIERS = {
 
 EMAIL = st.secrets["EMAIL"]
 PASSWORD = st.secrets["PASSWORD"]
-ACCOUNT_SID = st.secrets["SID"]
-AUTH_TOKEN = st.secrets["TOKEN"]
-
-client = Client(ACCOUNT_SID, AUTH_TOKEN)
-token = client.tokens.create()
 
 PROMPT = """
 Analyze this security footage. Give a detailed descriptions on the actions of all people that appear in the video. Carefully note any criminal activity when suspected, including, but not limited to: theft, burglary, and vandalism. Do not include timestamps. Speak as if you're talking to the homeowner. Make it in the following format:
@@ -131,10 +125,7 @@ threads = []
 webrtc_ctx = webrtc_streamer(
     key="video-sendonly",
     mode=WebRtcMode.SENDONLY,
-    media_stream_constraints={"video": True},
-    rtc_configuration={
-      "iceServers": token.ice_servers
-  }
+    media_stream_constraints={"video": True}
 )
 
 image_place = st.empty()
