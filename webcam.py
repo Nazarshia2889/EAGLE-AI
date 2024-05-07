@@ -25,8 +25,8 @@ CARRIERS = {
     "sprint": "@messaging.sprintpcs.com"
 }
 
-EMAIL = os.environ.get("EMAIL") # app email/authentication
-PASSWORD = os.environ.get("PASSWORD") # app password/authentication
+EMAIL = st.secrets["EMAIL"]
+PASSWORD = st.secrets["PASSWORD"]
 
 PROMPT = """
 Analyze this security footage. Give a detailed descriptions on the actions of all people that appear in the video. Carefully note any criminal activity when suspected, including, but not limited to: theft, burglary, and vandalism. Do not include timestamps. Speak as if you're talking to the homeowner. Make it in the following format:
