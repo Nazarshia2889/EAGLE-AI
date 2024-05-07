@@ -1,4 +1,4 @@
-# EagleAI Security Assist
+# EagleAI Security Assist with Gemini and Google Nest
 
 ![Basic example of Eagle AI](./docs/images/eagleai.gif)
 
