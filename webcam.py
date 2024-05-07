@@ -134,6 +134,7 @@ while True:
 	if webrtc_ctx.video_receiver:
 		try:
 			video_frame = webrtc_ctx.video_receiver.get_frame(timeout=1)
+			st.text("here")
 		except queue.Empty:
 			break
 
