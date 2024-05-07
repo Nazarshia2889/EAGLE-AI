@@ -29,7 +29,7 @@ CARRIERS = {
 EMAIL = st.secrets["EMAIL"]
 PASSWORD = st.secrets["PASSWORD"]
 ACCOUNT_SID = st.secrets["SID"]
-AUTH_TOKEN = st.secretes["TOKEN"]
+AUTH_TOKEN = st.secrets["TOKEN"]
 
 client = Client(ACCOUNT_SID, AUTH_TOKEN)
 token = client.tokens.create()
