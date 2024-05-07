@@ -112,7 +112,7 @@ phone_number = st.text_input('Phone Number', '1234567890')
 yolo_model = YOLO('./yolov8n.pt')
 # yolo_model.to('cuda')
 
-st.warning("""This Streamlit app uses streamlit-webrtc to get feed from your webcam, which does not always work online since Streamlit Community Cloud blocks WebRTC packets. See Github for instructions on running the app locally instead: https://github.com/Nazarshia2889/EagleAI""")
+st.warning("""PLEASE NOTE: This Streamlit app uses streamlit-webrtc to get feed from your webcam, which does not always work online since Streamlit Community Cloud blocks WebRTC packets. See Github for instructions on running the app locally instead: https://github.com/Nazarshia2889/EagleAI""")
 # st.warning("""Please note, MMS messages may experience delays due to processing via your carrier’s SMTP server. In the final product, we plan to implement our own VoIP system for improved efficiency. However, due to current project constraints, this feature is not yet available.""")
 
 pframes = deque(maxlen=PASSIVE_FRAMES) # 10 seconds of frames at 30fps
