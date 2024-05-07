@@ -3,4 +3,4 @@ ultralytics
 moviepy
 google-generativeai
 numpy
-opencv-python-headless
+streamlit_webrtc
