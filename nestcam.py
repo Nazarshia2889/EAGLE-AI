@@ -47,8 +47,6 @@ CARRIERS = {
     "verizon": "@vzwpix.com",
     "sprint": "@messaging.sprintpcs.com"
 }
-# EMAIL = os.environ.get("EMAIL") # eail to send sms from
-# PASSWORD = os.environ.get("PASSWORD") # app password/authentication
 
 PROMPT = """
 Analyze this security footage. Give a detailed descriptions on the actions of all people that appear in the video. Carefully note any criminal activity when suspected, including, but not limited to: theft, burglary, and vandalism. Do not include timestamps. Speak as if you're talking to the homeowner. Make it in the following format:
@@ -69,8 +67,9 @@ An individual was spotted in your garage. They appear to be removing items from 
 genai.configure(api_key='AIzaSyCUAR7qw9UPOay8T8Pg9-ExH0OJSCNU89E')
 genai_model = genai.GenerativeModel(model_name='models/gemini-1.5-pro-latest')
 
-EMAIL = os.environ.get("EMAIL") # email to send sms from
-PASSWORD = os.environ.get("PASSWORD") # app password/authentication
+EMAIL = "YOUR EMAIL HERE" # email to send sms from
+PASSWORD = "YOUR APP PASSWORD HERE" # app password/authentication
+PHONE_NUMBER = "YOUR PHONE NUMBER HERE"
 
 def detect_person(image, model) -> tuple[bool, float]:
 	results = model.predict(source=image, verbose=False, conf=CONFIDENCE_THRESHOLD)
@@ -123,8 +122,7 @@ def upload_to_gemini(genai, frames, prompt=PROMPT) -> str:
 	for path in temp_files:
 		os.remove(path)
 
-	# send_message("8582259790", "verizon", response.text)
-	send_message("YOUR PHONE NUMBER HERE", "verizon", "Subject: ALERT\n\n " + response.text)
+	send_message(PHONE_NUMBER, "verizon", "Subject: ALERT\n\n " + response.text)
 	return response.text
 
 yolo_model = YOLO('yolov8n.pt')
@@ -137,7 +135,6 @@ ivideo = 0
 
 threads = []
 
-print("Started screenshots...")
 while True:
 	# Screenshot and save to frames directory
 	screenshot_data = element.screenshot_as_png
