@@ -6,6 +6,9 @@ from threading import Thread
 import google.generativeai as genai
 import os
 import smtplib
+import numpy as np
+import queue
+from streamlit_webrtc import WebRtcMode, webrtc_streamer
 
 FPS = 30 # frames per second
 CONFIDENCE_THRESHOLD = 0.6 # face detection confidence threshold
@@ -18,12 +21,12 @@ NOT_DETECTED_THRESHOLD = 2 * FPS # number of frames to wait before stopping reco
 CARRIERS = {
     "att": "@mms.att.net",
     "tmobile": "@tmomail.net",
-    "verizon": "@vpix.com",
+    "verizon": "@vzwpix.com",
     "sprint": "@messaging.sprintpcs.com"
 }
 
-EMAIL = st.secrets["EMAIL"] # email to send sms from
-PASSWORD = st.secrets["PASSWORD"] # app password/authentication
+EMAIL = os.environ.get("EMAIL") # app email/authentication
+PASSWORD = os.environ.get("PASSWORD") # app password/authentication
 
 PROMPT = """
 Analyze this security footage. Give a detailed descriptions on the actions of all people that appear in the video. Carefully note any criminal activity when suspected, including, but not limited to: theft, burglary, and vandalism. Do not include timestamps. Speak as if you're talking to the homeowner. Make it in the following format:
@@ -42,10 +45,6 @@ Example:
 An individual was spotted in your garage. They appear to be removing items from cabinets and are armed. They are using what appear to be bricks as weapons
 """
 
-genai.configure(api_key='AIzaSyCUAR7qw9UPOay8T8Pg9-ExH0OJSCNU89E')
-
-genai_model = genai.GenerativeModel(model_name='models/gemini-1.5-pro-latest')
-
 def detect_person(image, model) -> tuple[bool, float]:
 	results = model.predict(source=image, verbose=False, conf=CONFIDENCE_THRESHOLD)
 	for r in results:
@@ -56,21 +55,6 @@ def detect_person(image, model) -> tuple[bool, float]:
 				confidence = float(box.conf)
 				return (True, confidence)
 	return (False, 0)
-
-
-st.set_page_config(page_title='Streamlit WebCam App')
-st.title('EagleAI: Security Monitor Descriptor with Google Gemini')
-st.caption('Powered by OpenCV, Streamlit')
-
-st.text("Input your phone number to receive a text alert.")
-phone_number = st.text_input('Phone Number', '1234567890')
-
-cap = cv2.VideoCapture(0)
-cap.set(3, 640)
-cap.set(4, 480)
-
-yolo_model = YOLO('yolov8n.pt')
-# yolo_model.to('cuda')
 
 def send_message(phone_number, carrier, message):
     recipient = phone_number + CARRIERS[carrier]
@@ -115,8 +99,20 @@ def upload_to_gemini(genai, frames, prompt=PROMPT) -> str:
 	send_message(phone_number, "verizon", response.text)
 	return response.text
 
-frame_placeholder = st.empty()
-stop_button_pressed = st.button('Stop')
+genai.configure(api_key='AIzaSyCUAR7qw9UPOay8T8Pg9-ExH0OJSCNU89E')
+genai_model = genai.GenerativeModel(model_name='models/gemini-1.5-pro-latest')
+
+st.set_page_config(page_title='EagleAI')
+st.title('EagleAI: Security Monitor Descriptor with Google Gemini')
+st.caption('EagleAI Demo with your own webcam as the security camera. Powered by OpenCV, Streamlit')
+
+st.text("Input your phone number before starting webcam to receive text alerts.")
+phone_number = st.text_input('Phone Number', '1234567890')
+
+yolo_model = YOLO('yolov8n.pt')
+# yolo_model.to('cuda')
+
+st.warning("""Please note, MMS messages may experience delays due to processing via your carrier’s SMTP server. In the final product, we plan to implement our own VoIP system for improved efficiency. However, due to current project constraints, this feature is not yet available.""")
 
 pframes = deque(maxlen=PASSIVE_FRAMES) # 10 seconds of frames at 30fps
 iframe = 0 # number of frames recorded
@@ -125,48 +121,56 @@ pdetected = deque(maxlen=NOT_DETECTED_THRESHOLD)
 ivideo = 0
 
 threads = []
-while cap.isOpened() and not stop_button_pressed:
-	success, img = cap.read()
-	bdetected, confidence = detect_person(img, yolo_model)
 
-	if img is not None:
-		img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-		frame_placeholder.image(img, channels='RGB')
+webrtc_ctx = webrtc_streamer(
+    key="video-sendonly",
+    mode=WebRtcMode.SENDONLY,
+    media_stream_constraints={"video": True},
+)
 
-	if (bdetected):
-		frames.append(img)
-		iframe += 1
-		if (iframe > UPPER_VIDEO_FRAMES_THRESHOLD):
-			print('Uploading to Gemini')
-			thread = Thread(target=upload_to_gemini, args=(genai, list(pframes) + frames))
-			thread.start()
-			
-			threads.append(thread)
+image_place = st.empty()
 
-			ivideo += 1
-			frames = []
-			pframes.clear()
-			iframe = 0
-		pdetected.append(True)
+while True:
+	if webrtc_ctx.video_receiver:
+		try:
+			video_frame = webrtc_ctx.video_receiver.get_frame(timeout=1)
+		except queue.Empty:
+			break
+
+		img = video_frame.to_ndarray(format="rgb24")
+		image_place.image(img)
+		img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+		bdetected, confidence = detect_person(img, yolo_model)
+		if (bdetected):
+			frames.append(img)
+			iframe += 1
+			if (iframe > UPPER_VIDEO_FRAMES_THRESHOLD):
+				print('Uploading to Gemini')
+				thread = Thread(target=upload_to_gemini, args=(genai, list(pframes) + frames))
+				thread.start()
+				
+				threads.append(thread)
+
+				ivideo += 1
+				frames = []
+				pframes.clear()
+				iframe = 0
+			pdetected.append(True)
+		else:
+			pframes.append(img)
+			pdetected.append(False)
+
+			if (len(frames) > LOWER_VIDEO_FRAMES_THRESHOLD and all(not pd for pd in pdetected)):
+				print("Uploading to Gemini")
+				thread = Thread(target=upload_to_gemini, args=(genai, list(pframes) + frames))
+				thread.start()
+				threads.append(thread)
+
+				ivideo += 1
+				frames = []
+				pframes.clear()
+
+		for thread in threads:
+			thread.join()	
 	else:
-		pframes.append(img)
-		pdetected.append(False)
-
-		if (len(frames) > LOWER_VIDEO_FRAMES_THRESHOLD and all(not pd for pd in pdetected)):
-			print("Uploading to Gemini")
-			thread = Thread(target=upload_to_gemini, args=(genai, list(pframes) + frames))
-			thread.start()
-			threads.append(thread)
-
-			ivideo += 1
-			frames = []
-			pframes.clear()
-
-	if cv2.waitKey(1) & 0xFF == ord("q") or stop_button_pressed:
 		break
-
-for thread in threads:
-	thread.join()
-
-cap.release()
-cv2.destroyAllWindows()
