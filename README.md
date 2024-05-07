@@ -48,4 +48,4 @@ $ streamlit run webcam.py
 ```
 This should open the app. Input your phone number and hit 'start' to turn on your webcam. This will execute the same algorithm as the Nest camera version.
 
-:warning: Please note, MMS messages may experience delays due to processing via your carrier’s SMTP server. In the final product, we plan to implement our own VoIP system for improved efficiency. However, due to current constraints, this feature is not yet available. We appreciate your understanding and patience.
+:warning: Please note, MMS messages may experience delays due to processing via your carrier’s SMTP server. In the final product, we plan to implement our own VoIP system for improved efficiency. However, due to current constraints, this feature is not yet available.
