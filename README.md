@@ -2,7 +2,7 @@
 
 ## Overview:
 
-We enhance security systems by leveraging AI to provide immediate, actionable security reports. Our system, EAGLE (Enhanced Automated Guardian for Living Environments) AI, reduces false positive notifications and provides detailed summaries of any detected irregularities.
+We enhance security systems by leveraging AI to provide immediate, actionable security reports. Our system, EAGLE (Enhanced Automated Guardian for Living Environments) AI, reduces false positive notifications and provides detailed summaries of any detected irregularities. *We use camera feed from a Google Nest Camera in order to carry out our project.*
 
 ## Inspiration:
 
@@ -10,9 +10,9 @@ After using popular security systems, we noticed a large amount of false positiv
 
 ## Features:
 
-- Detailed summary of irregularities instead of generic notifications.
-- Estimates severity and provides options for next steps.
-- Applications in personal security and large-scale surveillance.
+* Detailed summary of irregularities instead of generic notifications.
+* Estimates severity and provides options for next steps.
+* Applications in personal security and large-scale surveillance.
 
 This empowers the users with the immediate information needed to respond to the situation instead of them needing to manually classify the severity of the situation by rewatching security footage.
 
@@ -24,8 +24,26 @@ This empowers the users with the immediate information needed to respond to the 
 
 - Part 3: Text Message: Once the report is finalized, using Python's EmailMessage library, we will send a text message of the report to the individual user notifying them of the situation and what the recommended next steps are.
 
-## Add-On:
+### Want to use with your Nest Camera?
 
-Considering that access to a Nest camera and using the Nest developer API to get this system working isn't available for everyone, we built an alternative to the general system on StreamLit. Instead of using a Nest camera, it will employ the webcam of a computer (via OpenCV) as the camera and run the model using your webcam feed. Link to StreamLit: https://eagleai.streamlit.app/
+In order to get access to your Nest camera feed, you will need to register for Device Access to use the Google Device Access API. Follow the instructions on this page (https://developers.google.com/nest/device-access/project) to register for Device Access ($5) and retrieve the following:
+* Access Token
+* Project ID
+* Device ID
+* Client ID
+* Client Secret
+* Refresh Token
 
-If you would like to use the Nest cam, go to https://developers.google.com/nest/device-access/project and follow the instructions to register for Google Device access, obtain the required keys, and run the webrtc folder server. You can then run nestcam.py to continuously send frames to Gemini and alert you.
+You will also need to set up an app password with your email: https://support.google.com/mail/answer/185833?hl=en.
+
+Next, clone this repository and input the above variables in the corresponding fields of the `server.py` file from the `webrtc_server` folder, including the tokens listed above. Run `server.py` in order to run the backend server locally that collects the camera feed. Add the email and app password generated in the previous step in the corresponding EMAIL and PASSWORD fields in `nestcam.py`, as well as your phone number in this format: 1234567890. Make sure to also change the carrier to your current phone carrier (set to Verizon right now). In a separate instance from the server, run `nestcam.py`, and the system should be active as long as your Nest Camera and server are still on. When a person is detected in the scene, video batches are sent to Gemini to process and send a text message.
+
+### Don't have a Nest Camera?
+
+We have also created a Streamlit version of the product using your computer's webcam as the "security camera" for demos. To run, clone this repository, download the dependencies in requirements.txt, and run the app `webcam.py` with:
+```shell
+$ streamlit run webacm.py
+```
+This should open the app. Input your phone number and hit 'start' to turn on your webcam. This will execute the same algorithm as the Nest camera version.
+
+:warning: Please note, MMS messages may experience delays due to processing via your carrier’s SMTP server. In the final product, we plan to implement our own VoIP system for improved efficiency. However, due to current constraints, this feature is not yet available. We appreciate your understanding and patience.
