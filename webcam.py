@@ -123,9 +123,7 @@ ivideo = 0
 threads = []
 
 webrtc_ctx = webrtc_streamer(
-    key="video-sendonly",
-    mode=WebRtcMode.SENDONLY,
-    media_stream_constraints={"video": True},
+    key="video-sendonly"
 )
 
 image_place = st.empty()
