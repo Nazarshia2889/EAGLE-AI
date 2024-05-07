@@ -4,3 +4,4 @@ moviepy
 google-generativeai
 numpy
 streamlit_webrtc
+twilio
