@@ -59,7 +59,7 @@ def send_message(phone_number, carrier, message):
 
     server.sendmail(auth[0], recipient, message)
     print(f"Usage: python3 {phone_number, carrier, message}")
-send_message("8584420958", "verizon", "Subject: ALERT\n\n " + response.text) 
+send_message("INSERT PHONE NUMBER HERE", "verizon", "Subject: ALERT\n\n " + response.text) 
 print(response.text)
 
 
