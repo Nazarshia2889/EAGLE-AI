@@ -4,7 +4,7 @@
 
 ## Overview:
 
-We enhance security systems by leveraging AI to provide immediate, actionable security reports through text messages. Our system, EAGLE (Enhanced Automated Guardian for Living Environments) AI, reduces false positive notifications and provides detailed summaries of any detected irregularities. We use camera feed from a Google Nest Camera in order to carry out our project.
+We enhance security systems by leveraging Gemini to provide immediate, actionable security reports through text messages. Our system, EAGLE (Enhanced Automated Guardian for Living Environments) AI, reduces false positive notifications and provides detailed summaries of any detected irregularities. We have two versions of this project: one where you can access a Google Nest camera feed using the Device Access API, or you can use your own computer webcam through a Streamlit app for demonstration.
 
 ## Inspiration:
 
@@ -22,13 +22,13 @@ This empowers the users with the immediate information needed to respond to the 
 
 - Part 1: Google Nest API: Using the Google Device Access API, we are able to access the camera feed of a wired Nest camera. We then process the WebRTC stream frames through the YOLOv8n model and analyze whether or not there is a person being detected. If it detects a person, a video batch will be sent to Gemini.
 
-- Part 2: Gemini: Once the frames are sent to Gemini, the model will process the frames and also, with a given prompt that asks for a detailed report, it will generate a detailed report regarding the main events, the suspicion level, and recommended steps if needed.
+- Part 2: Gemini: Once the frames are sent to Gemini, the model will process the frames and, with our corresponding prompt, will generate a detailed report regarding the main events, the suspicion level, and recommended steps if needed.
 
-- Part 3: Text Message: Once the report is finalized, we will send a text message of the report to the individual user notifying them of the situation and what the recommended next steps are.
+- Part 3: Text Message: Once the report is finalized, we send a text message of the report to the individual user notifying them of the situation and what the recommended next steps are.
 
-### Want to use with your Nest Camera?
+### Want to use with your Google Nest Camera?
 
-In order to get access to your Nest camera feed, you will need to register for Device Access to use the Google Device Access API. Follow the instructions on this page (https://developers.google.com/nest/device-access/project) to register for Device Access ($5) and retrieve the following:
+In order to get access to your Nest camera feed, you will need to register for the Google Device Access API. Follow the instructions on this page (https://developers.google.com/nest/device-access/project) to register for Device Access (NOTE: The device access API costs $5). Please retrieve the following from the instructions:
 * Access Token
 * Project ID
 * Device ID
@@ -38,11 +38,17 @@ In order to get access to your Nest camera feed, you will need to register for D
 
 You will also need to set up an app password with your email: https://support.google.com/mail/answer/185833?hl=en.
 
-Next, clone this repository and input the above variables in the corresponding fields of the `server.py` file from the `webrtc_server` folder, including the tokens listed above. Run `server.py` in order to run the backend server locally that collects the camera feed. Add the email and app password generated in the previous step in the corresponding EMAIL and PASSWORD fields in `nestcam.py`, as well as your phone number in this format: 1234567890. Make sure to also change the carrier to your current phone carrier (set to Verizon right now). In a separate instance from the server, run `nestcam.py`, and the system should be active as long as your Nest Camera and server are still on. When a person is detected in the scene, video batches are sent to Gemini to process and send a text message.
+Next, clone this repository and input the above variables (access token, project id, device id, client id, client secret, refresh token) in the corresponding fields of the `script.js` file from the `webrtc_server` folder. Run `server.py` in order to run the backend server locally that collects the camera feed. 
+
+Add the email and app password generated in the previous step in the corresponding EMAIL and PASSWORD fields in `nestcam.py`, as well as your phone number in this format: 1234567890. Make sure to also change the carrier to your current phone carrier (set to Verizon right now). 
+
+In a separate instance from the server, run `nestcam.py`, and the system should be active as long as your Nest Camera and server are still on. When a person is detected in the scene, video batches are sent to Gemini to process and send a text message.
 
 ### Don't have a Nest Camera?
 
-We have also created a Streamlit version of the product using your computer's webcam as the "security camera" for demos. To run, clone this repository, download the dependencies in requirements.txt, and run the app `webcam.py` with:
+We have also created a Streamlit version of the product using your computer's webcam as the "security camera" for demos. All you need is an email with a corresponding app password (https://support.google.com/mail/answer/185833?hl=en) to send the report from, and a phone number to send the report to.
+
+To run, clone this repository, download the dependencies in requirements.txt, and run the app `webcam.py` with:
 ```shell
 $ streamlit run webcam.py
 ```
