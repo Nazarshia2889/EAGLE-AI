@@ -16,7 +16,7 @@ After using popular security systems, we noticed a large amount of false positiv
 * Estimates severity and provides options for next steps.
 * Applications in personal security and large-scale surveillance.
 
-This empowers the users with the immediate information needed to respond to the situation instead of them needing to manually classify the severity of the situation by rewatching security footage.
+This empowers the users with the immediate information needed to respond to the situation instead of having a person continuously monitor security footage.
 
 ## How It Works:
 
