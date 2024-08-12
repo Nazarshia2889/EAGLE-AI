@@ -1,0 +1,7 @@
+opencv-python-headless
+ultralytics
+google-generativeai
+numpy
+streamlit_webrtc
+selenium
+aiohttp
